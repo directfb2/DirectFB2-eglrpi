@@ -1,0 +1,64 @@
+DirectFB2-eglrpi
+================
+
+DirectFB2-eglrpi contains the EGL system module for DirectFB2 and supported on Raspberry Pi Dispmanx platforms.
+
+df_dok results when using eglrpi system module combined with gles2 GFX driver (hardware acceleration):
+
+Benchmarking 256x256 on 800x480 ARGB (32bit)...
+Anti-aliased Text                              3.022 secs (* 277.564 KChars/sec) [103.9%]
+Anti-aliased Text (blend)                      3.024 secs (* 279.761 KChars/sec) [104.9%]
+Fill Rectangle                                 3.358 secs (* 753.332 MPixel/sec) [ 63.8%]
+Fill Rectangle (blend)                         3.371 secs (* 596.842 MPixel/sec) [ 51.0%]
+Fill Rectangles [10]                           4.023 secs (* 749.355 MPixel/sec) [ 15.9%]
+Fill Rectangles [10] (blend)                   3.918 secs (* 635.622 MPixel/sec) [ 14.5%]
+Fill Triangles                                 3.111 secs (* 507.688 MPixel/sec) [ 88.4%]
+Fill Triangles (blend)                         3.082 secs (* 449.736 MPixel/sec) [ 79.2%]
+Draw Rectangle                                 3.098 secs (*  18.689 KRects/sec) [108.7%]
+Draw Rectangle (blend)                         3.086 secs (*  18.891 KRects/sec) [108.7%]
+Draw Lines [10]                                3.373 secs (*  22.828 KLines/sec) [ 33.2%]
+Draw Lines [10] (blend)                        3.445 secs (*  22.351 KLines/sec) [ 32.5%]
+Fill Spans                                     4.387 secs (*   5.975 MPixel/sec) [ 18.7%]
+Fill Spans (blend)                             4.344 secs (*   6.034 MPixel/sec) [ 18.4%]
+Fill Trapezoids [10]                           3.747 secs (  594.668 MPixel/sec) [ 20.8%]
+Blit                                           4.137 secs (* 329.501 MPixel/sec) [ 32.4%]
+Blit 180                                       3.140 secs (* 340.202 MPixel/sec) [ 32.8%]
+Blit colorkeyed                                3.256 secs (* 229.456 MPixel/sec) [ 22.1%]
+Blit with format conversion                    4.499 secs (* 297.162 MPixel/sec) [ 28.5%]
+Blit with colorizing                           3.140 secs (* 342.289 MPixel/sec) [ 41.0%]
+Blit from 32bit (blend)                        3.603 secs (* 234.641 MPixel/sec) [ 22.5%]
+Blit from 32bit (blend) with colorizing        4.425 secs (* 257.700 MPixel/sec) [ 31.2%]
+Blit SrcOver (premultiplied source)            3.643 secs (* 295.028 MPixel/sec) [ 28.5%]
+Blit SrcOver (premultiply source)              3.106 secs (* 280.627 MPixel/sec) [ 29.0%]
+Stretch Blit                                   3.086 secs (* 418.668 MPixel/sec) [ 33.1%]
+Stretch Blit colorkeyed                        3.334 secs (* 246.105 MPixel/sec) [ 18.6%]
+
+compared to the results obtained with the fbdev system module (no hardware acceleration):
+
+Benchmarking 256x256 on 800x480 ARGB (32bit)...
+Anti-aliased Text                              3.018 secs (  101.391 KChars/sec) [100.3%]
+Anti-aliased Text (blend)                      3.059 secs (   20.006 KChars/sec) [100.3%]
+Fill Rectangle                                 3.002 secs (  257.603 MPixel/sec) [100.0%]
+Fill Rectangle (blend)                         3.395 secs (    3.860 MPixel/sec) [100.2%]
+Fill Rectangles [10]                           3.236 secs (  263.278 MPixel/sec) [100.0%]
+Fill Rectangles [10] (blend)                  16.960 secs (    3.864 MPixel/sec) [100.0%]
+Fill Triangles                                 3.007 secs (  169.996 MPixel/sec) [100.3%]
+Fill Triangles (blend)                         3.426 secs (    3.825 MPixel/sec) [100.2%]
+Draw Rectangle                                 3.005 secs (   16.871 KRects/sec) [100.0%]
+Draw Rectangle (blend)                         3.034 secs (    2.307 KRects/sec) [100.3%]
+Draw Lines [10]                                3.005 secs (   53.910 KLines/sec) [100.3%]
+Draw Lines [10] (blend)                        3.002 secs (   10.992 KLines/sec) [100.0%]
+Fill Spans                                     3.005 secs (  228.994 MPixel/sec) [100.0%]
+Fill Spans (blend)                             3.415 secs (    3.838 MPixel/sec) [100.0%]
+Fill Trapezoids [10]                           3.159 secs (  248.949 MPixel/sec) [100.3%]
+Blit                                           3.009 secs (  237.401 MPixel/sec) [100.3%]
+Blit 180                                       3.035 secs (  166.269 MPixel/sec) [100.0%]
+Blit colorkeyed                                3.061 secs (   92.062 MPixel/sec) [100.0%]
+Blit with format conversion                    3.221 secs (   18.311 MPixel/sec) [100.0%]
+Blit with colorizing                           3.050 secs (   12.892 MPixel/sec) [100.0%]
+Blit from 32bit (blend)                        4.206 secs (    3.116 MPixel/sec) [100.2%]
+Blit from 32bit (blend) with colorizing        4.544 secs (    2.884 MPixel/sec) [100.0%]
+Blit SrcOver (premultiplied source)            3.340 secs (    9.810 MPixel/sec) [100.0%]
+Blit SrcOver (premultiply source)              3.198 secs (   26.640 MPixel/sec) [100.0%]
+Stretch Blit                                   3.001 secs (  161.177 MPixel/sec) [100.0%]
+Stretch Blit colorkeyed                        3.001 secs (   70.964 MPixel/sec) [100.0%]
