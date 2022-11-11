@@ -56,6 +56,12 @@ local_init( EGLData *egl )
      /* Open EGL display. */
      bcm_host_init();
 
+     egl->dispmanx_display = vc_dispmanx_display_open( DISPMANX_ID_MAIN_LCD );
+     if (egl->dispmanx_display == DISPMANX_NO_HANDLE) {
+          D_ERROR( "EGL/System: vc_dispmanx_display_open() failed!\n" );
+          return DFB_INIT;
+     }
+
      egl->eglDisplay = eglGetDisplay( EGL_DEFAULT_DISPLAY );
      if (!egl->eglDisplay) {
           D_ERROR( "EGL/System: eglGetDisplay() failed: 0x%x!\n", (unsigned int) eglGetError() );
@@ -73,13 +79,7 @@ local_init( EGLData *egl )
      }
 
      /* Retrieve display information. */
-     egl->display_handle = vc_dispmanx_display_open( DISPMANX_ID_MAIN_LCD );
-     if (egl->display_handle == DISPMANX_NO_HANDLE) {
-           D_ERROR( "EGL/System: vc_dispmanx_display_open() failed!\n" );
-           return DFB_INIT;
-     }
-
-     if (vc_dispmanx_display_get_info( egl->display_handle, &modeinfo ) < 0) {
+     if (vc_dispmanx_display_get_info( egl->dispmanx_display, &modeinfo ) < 0) {
            D_ERROR( "EGL/System: vc_dispmanx_display_get_info() failed!\n" );
            return DFB_INIT;
      }
@@ -92,8 +92,8 @@ local_init( EGLData *egl )
      /* Create EGL window surface. */
      update_handle = vc_dispmanx_update_start( 0 );
      if (update_handle == DISPMANX_NO_HANDLE) {
-           D_ERROR( "EGL/System: vc_dispmanx_update_start() failed!\n" );
-           return DFB_INIT;
+          D_ERROR( "EGL/System: vc_dispmanx_update_start() failed!\n" );
+          return DFB_INIT;
      }
 
      dst_rect.x      = 0;
@@ -106,23 +106,24 @@ local_init( EGLData *egl )
      src_rect.width  = egl->size.w << 16;
      src_rect.height = egl->size.h << 16;
 
-     egl->element_handle = vc_dispmanx_element_add( update_handle, egl->display_handle, 0, &dst_rect, DISPMANX_NO_HANDLE,
-                                                    &src_rect, DISPMANX_PROTECTION_NONE, NULL, NULL, DISPMANX_NO_ROTATE );
-     if (egl->element_handle == DISPMANX_NO_HANDLE) {
-           D_ERROR( "EGL/System: vc_dispmanx_element_add() failed!\n" );
-           return DFB_INIT;
+     egl->dispmanx_element = vc_dispmanx_element_add( update_handle, egl->dispmanx_display, 0, &dst_rect,
+                                                      DISPMANX_NO_HANDLE, &src_rect, DISPMANX_PROTECTION_NONE,
+                                                      NULL, NULL, DISPMANX_NO_ROTATE );
+     if (egl->dispmanx_element == DISPMANX_NO_HANDLE) {
+          D_ERROR( "EGL/System: vc_dispmanx_element_add() failed!\n" );
+          return DFB_INIT;
      }
 
      if (vc_dispmanx_update_submit_sync( update_handle ) < 0) {
-           D_ERROR( "EGL/System: vc_dispmanx_update_submit_sync() failed!\n" );
-           return DFB_INIT;
+          D_ERROR( "EGL/System: vc_dispmanx_update_submit_sync() failed!\n" );
+          return DFB_INIT;
      }
 
-     egl->window.element = egl->element_handle;
-     egl->window.width   = egl->size.w;
-     egl->window.height  = egl->size.h;
+     egl->dispmanx_window.element = egl->dispmanx_element;
+     egl->dispmanx_window.width   = egl->size.w;
+     egl->dispmanx_window.height  = egl->size.h;
 
-     egl->eglSurface = eglCreateWindowSurface( egl->eglDisplay, config, (EGLNativeWindowType) &egl->window, NULL );
+     egl->eglSurface = eglCreateWindowSurface( egl->eglDisplay, config, (EGLNativeWindowType) &egl->dispmanx_window, NULL );
      if (!egl->eglSurface) {
           D_ERROR( "EGL/System: eglCreateWindowSurface() failed: 0x%x!\n", (unsigned int) eglGetError() );
           return DFB_INIT;
@@ -163,20 +164,20 @@ local_deinit( EGLData *egl )
      if (egl->eglSurface)
           eglDestroySurface( egl->eglDisplay, egl->eglSurface );
 
-     if (egl->element_handle != DISPMANX_NO_HANDLE) {
+     if (egl->dispmanx_element != DISPMANX_NO_HANDLE) {
           DISPMANX_UPDATE_HANDLE_T update_handle;
 
           if ((update_handle = vc_dispmanx_update_start( 0 )) != DISPMANX_NO_HANDLE) {
-            vc_dispmanx_element_remove( update_handle, egl->element_handle );
-            vc_dispmanx_update_submit_sync( update_handle );
+               vc_dispmanx_element_remove( update_handle, egl->dispmanx_element );
+               vc_dispmanx_update_submit_sync( update_handle );
           }
      }
 
-     if (egl->display_handle != DISPMANX_NO_HANDLE)
-          vc_dispmanx_display_close( egl->display_handle );
-
      if (egl->eglDisplay)
           eglTerminate( egl->eglDisplay );
+
+     if (egl->dispmanx_display != DISPMANX_NO_HANDLE)
+          vc_dispmanx_display_close( egl->dispmanx_display );
 
      bcm_host_deinit();
 
