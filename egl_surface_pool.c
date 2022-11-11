@@ -30,14 +30,6 @@ D_DEBUG_DOMAIN( EGL_SurfLock, "EGL/SurfLock", "EGL Surface Pool Locks" );
 /**********************************************************************************************************************/
 
 typedef struct {
-     int magic;
-} EGLPoolData;
-
-typedef struct {
-     int magic;
-} EGLPoolLocalData;
-
-typedef struct {
      int    magic;
 
      int    pitch;
@@ -48,18 +40,6 @@ typedef struct {
 } EGLAllocationData;
 
 /**********************************************************************************************************************/
-
-static int
-eglPoolDataSize( void )
-{
-     return sizeof(EGLPoolData);
-}
-
-static int
-eglPoolLocalDataSize( void )
-{
-     return sizeof(EGLPoolLocalData);
-}
 
 static int
 eglAllocationDataSize( void )
@@ -75,20 +55,14 @@ eglInitPool( CoreDFB                    *core,
              void                       *system_data,
              CoreSurfacePoolDescription *ret_desc )
 {
-     EGLPoolData      *data  = pool_data;
-     EGLPoolLocalData *local = pool_local;
-     EGLData          *egl   = system_data;
+     EGLData *egl = system_data;
 
-     D_UNUSED_P( data );
-     D_UNUSED_P( local );
      D_UNUSED_P( egl );
 
      D_DEBUG_AT( EGL_Surfaces, "%s()\n", __FUNCTION__ );
 
      D_ASSERT( core != NULL );
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_ASSERT( data != NULL );
-     D_ASSERT( local != NULL );
      D_ASSERT( egl != NULL );
      D_ASSERT( egl->shared != NULL );
      D_ASSERT( ret_desc != NULL );
@@ -103,9 +77,6 @@ eglInitPool( CoreDFB                    *core,
 
      snprintf( ret_desc->name, DFB_SURFACE_POOL_DESC_NAME_LENGTH, "EGL Surface Pool" );
 
-     D_MAGIC_SET( data, EGLPoolData );
-     D_MAGIC_SET( local, EGLPoolLocalData );
-
      return DFB_OK;
 }
 
@@ -116,24 +87,16 @@ eglJoinPool( CoreDFB         *core,
              void            *pool_local,
              void            *system_data )
 {
-     EGLPoolData      *data  = pool_data;
-     EGLPoolLocalData *local = pool_local;
-     EGLData          *egl   = system_data;
+     EGLData *egl = system_data;
 
-     D_UNUSED_P( data );
-     D_UNUSED_P( local );
      D_UNUSED_P( egl );
 
      D_DEBUG_AT( EGL_Surfaces, "%s()\n", __FUNCTION__ );
 
      D_ASSERT( core != NULL );
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_MAGIC_ASSERT( data, EGLPoolData );
-     D_ASSERT( local != NULL );
      D_ASSERT( egl != NULL );
      D_ASSERT( egl->shared != NULL );
-
-     D_MAGIC_SET( local, EGLPoolLocalData );
 
      return DFB_OK;
 }
@@ -143,20 +106,9 @@ eglDestroyPool( CoreSurfacePool *pool,
                 void            *pool_data,
                 void            *pool_local )
 {
-     EGLPoolData      *data  = pool_data;
-     EGLPoolLocalData *local = pool_local;
-
-     D_UNUSED_P( data );
-     D_UNUSED_P( local );
-
      D_DEBUG_AT( EGL_Surfaces, "%s()\n", __FUNCTION__ );
 
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_MAGIC_ASSERT( data, EGLPoolData );
-     D_MAGIC_ASSERT( local, EGLPoolLocalData );
-
-     D_MAGIC_CLEAR( data );
-     D_MAGIC_CLEAR( local );
 
      return DFB_OK;
 }
@@ -166,19 +118,9 @@ eglLeavePool( CoreSurfacePool *pool,
               void            *pool_data,
               void            *pool_local )
 {
-     EGLPoolData      *data  = pool_data;
-     EGLPoolLocalData *local = pool_local;
-
-     D_UNUSED_P( data );
-     D_UNUSED_P( local );
-
      D_DEBUG_AT( EGL_Surfaces, "%s()\n", __FUNCTION__ );
 
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_MAGIC_ASSERT( data, EGLPoolData );
-     D_MAGIC_ASSERT( local, EGLPoolLocalData );
-
-     D_MAGIC_CLEAR( local );
 
      return DFB_OK;
 }
@@ -190,17 +132,9 @@ eglTestConfig( CoreSurfacePool         *pool,
                CoreSurfaceBuffer       *buffer,
                const CoreSurfaceConfig *config )
 {
-     EGLPoolData      *data  = pool_data;
-     EGLPoolLocalData *local = pool_local;
-
-     D_UNUSED_P( data );
-     D_UNUSED_P( local );
-
      D_DEBUG_AT( EGL_Surfaces, "%s( %p )\n", __FUNCTION__, buffer );
 
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_MAGIC_ASSERT( data, EGLPoolData );
-     D_MAGIC_ASSERT( local, EGLPoolLocalData );
      D_MAGIC_ASSERT( buffer, CoreSurfaceBuffer );
      D_MAGIC_ASSERT( buffer->surface, CoreSurface );
 
@@ -216,20 +150,13 @@ eglAllocateBuffer( CoreSurfacePool       *pool,
                    void                  *alloc_data )
 {
      CoreSurface       *surface;
-     EGLPoolData       *data  = pool_data;
-     EGLPoolLocalData  *local = pool_local;
      EGLAllocationData *alloc = alloc_data;
      GLint              tex;
      GLint              fbo;
 
-     D_UNUSED_P( data );
-     D_UNUSED_P( local );
-
      D_DEBUG_AT( EGL_Surfaces, "%s( %p )\n", __FUNCTION__, buffer );
 
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_MAGIC_ASSERT( data, EGLPoolData );
-     D_MAGIC_ASSERT( local, EGLPoolLocalData );
      D_MAGIC_ASSERT( buffer, CoreSurfaceBuffer );
      D_MAGIC_ASSERT( buffer->surface, CoreSurface );
 
@@ -278,17 +205,11 @@ eglDeallocateBuffer( CoreSurfacePool       *pool,
                      CoreSurfaceAllocation *allocation,
                      void                  *alloc_data )
 {
-     EGLPoolData       *data  = pool_data;
-     EGLPoolLocalData  *local = pool_local;
      EGLAllocationData *alloc = alloc_data;
-
-     D_UNUSED_P( data );
-     D_UNUSED_P( local );
 
      D_DEBUG_AT( EGL_Surfaces, "%s( %p )\n", __FUNCTION__, buffer );
 
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_MAGIC_ASSERT( data, EGLPoolData );
      D_MAGIC_ASSERT( alloc, EGLAllocationData );
 
      D_DEBUG_AT( EGL_Surfaces, "  -> pitch %d\n", alloc->pitch );
@@ -312,13 +233,9 @@ eglLock( CoreSurfacePool       *pool,
          void                  *alloc_data,
          CoreSurfaceBufferLock *lock )
 {
-     EGLPoolLocalData  *local = pool_local;
      EGLAllocationData *alloc = alloc_data;
 
-     D_UNUSED_P( local );
-
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_MAGIC_ASSERT( local, EGLPoolLocalData );
      D_MAGIC_ASSERT( allocation, CoreSurfaceAllocation );
      D_MAGIC_ASSERT( alloc, EGLAllocationData );
      D_MAGIC_ASSERT( lock, CoreSurfaceBufferLock );
@@ -400,8 +317,6 @@ eglWrite( CoreSurfacePool       *pool,
 }
 
 const SurfacePoolFuncs eglSurfacePoolFuncs = {
-     .PoolDataSize       = eglPoolDataSize,
-     .PoolLocalDataSize  = eglPoolLocalDataSize,
      .AllocationDataSize = eglAllocationDataSize,
      .InitPool           = eglInitPool,
      .JoinPool           = eglJoinPool,

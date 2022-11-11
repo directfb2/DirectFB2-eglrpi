@@ -39,14 +39,13 @@ typedef struct {
 
      CoreDFB                   *core;
 
+     DISPMANX_DISPLAY_HANDLE_T  dispmanx_display;
      EGLDisplay                 eglDisplay;
 
      DFBDimension               size;
 
-     DISPMANX_DISPLAY_HANDLE_T  display_handle;
-     DISPMANX_ELEMENT_HANDLE_T  element_handle;
-
-     EGL_DISPMANX_WINDOW_T      window;
+     DISPMANX_ELEMENT_HANDLE_T  dispmanx_element;
+     EGL_DISPMANX_WINDOW_T      dispmanx_window;
 
      EGLSurface                 eglSurface;
      EGLContext                 eglContext;

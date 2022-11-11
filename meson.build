@@ -21,13 +21,9 @@ directfb_dep = dependency('directfb-internal')
 
 moduledir = directfb_dep.get_pkgconfig_variable('moduledir')
 
-eglrpi_dep = [dependency('bcm_host'),
+eglrpi_dep = [dependency('bcm_host'), dependency('egl'), dependency('glesv2'),
               meson.get_compiler('c').find_library('vchostif',
                                                    dirs: run_command('pkg-config', '--variable=libdir', 'bcm_host').stdout().strip())]
-
-egl_dep = dependency('egl')
-
-glesv2_dep = dependency('glesv2')
 
 add_global_arguments('-DEGL_NO_X11', language: 'c')
 
@@ -40,6 +36,6 @@ eglrpi_sources = [
 
 library('directfb_eglrpi',
         eglrpi_sources,
-        dependencies: [directfb_dep, egl_dep, eglrpi_dep, glesv2_dep],
+        dependencies: [directfb_dep, eglrpi_dep],
         install: true,
         install_dir: join_paths(moduledir, 'systems'))
