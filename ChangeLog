@@ -1,3 +1,24 @@
+commit 85abdabe735d99f328f403877ae2b3fe4c23ebe5
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Nov 11 14:52:16 2022 +0100
+
+    Unused PoolData and PoolLocalData
+
+commit 9dfdbae5aff430a742842227d7632e9166f7cc0f
+Merge: a7a4376 bbac5de
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Wed Nov 9 17:24:37 2022 +0100
+
+    Merge pull request #1 from caramelli/master
+    
+    Raspberry Pi system module
+
+commit bbac5de28974b5edbefc7a72976ff9f5b2fd4430
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Wed Nov 9 17:17:41 2022 +0100
+
+    Add ChangeLog
+
 commit 699284289f3fba433671faa1d9397b02faf35a09
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Wed Nov 9 17:13:21 2022 +0100
