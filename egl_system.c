@@ -141,11 +141,6 @@ local_init( EGLData *egl )
           return DFB_INIT;
      }
 
-     if (!eglSwapInterval( egl->eglDisplay, 1 )) {
-          D_ERROR( "EGL/System: eglSwapInterval() failed: 0x%x!\n", (unsigned int) eglGetError() );
-          return DFB_INIT;
-     }
-
      screen = dfb_screens_register( egl, &eglScreenFuncs );
 
      dfb_layers_register( screen, egl, &eglPrimaryLayerFuncs );
