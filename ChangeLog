@@ -1,3 +1,24 @@
+commit 24ccd448829c0424f2f363b66128e3b6842884af
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Tue Nov 22 04:45:58 2022 +0100
+
+    Default swap interval is 1
+
+commit fec65ab02a7efd6bdf3abd84720ff07ec99361f2
+Merge: 9dfdbae 4443802
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Fri Nov 11 14:54:25 2022 +0100
+
+    Merge pull request #2 from caramelli/master
+    
+    Unused PoolData and PoolLocalData
+
+commit 4443802a9f193dd03665e57a5774dea79012507b
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Nov 11 14:52:23 2022 +0100
+
+    Update ChangeLog
+
 commit 85abdabe735d99f328f403877ae2b3fe4c23ebe5
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Fri Nov 11 14:52:16 2022 +0100
