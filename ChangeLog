@@ -1,3 +1,24 @@
+commit d5b7e5d801004b3aac6a627a5305533a4ebff30b
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Nov 25 15:48:46 2022 +0100
+
+    EGL/Surfaces: Unused EGLData
+
+commit cc328fcaddd6e664ba895cf8bf13cce5dc677bb2
+Merge: fec65ab bcff519
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Tue Nov 22 04:45:29 2022 +0100
+
+    Merge pull request #3 from caramelli/master
+    
+    Default swap interval is 1
+
+commit bcff51975132e353989a711180ef0c988a2fa34b
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Tue Nov 22 04:46:08 2022 +0100
+
+    Update ChangeLog
+
 commit 24ccd448829c0424f2f363b66128e3b6842884af
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Tue Nov 22 04:45:58 2022 +0100
