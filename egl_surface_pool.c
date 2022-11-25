@@ -55,16 +55,10 @@ eglInitPool( CoreDFB                    *core,
              void                       *system_data,
              CoreSurfacePoolDescription *ret_desc )
 {
-     EGLData *egl = system_data;
-
-     D_UNUSED_P( egl );
-
      D_DEBUG_AT( EGL_Surfaces, "%s()\n", __FUNCTION__ );
 
      D_ASSERT( core != NULL );
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_ASSERT( egl != NULL );
-     D_ASSERT( egl->shared != NULL );
      D_ASSERT( ret_desc != NULL );
 
      ret_desc->caps              = CSPCAPS_PHYSICAL | CSPCAPS_VIRTUAL;
@@ -87,16 +81,10 @@ eglJoinPool( CoreDFB         *core,
              void            *pool_local,
              void            *system_data )
 {
-     EGLData *egl = system_data;
-
-     D_UNUSED_P( egl );
-
      D_DEBUG_AT( EGL_Surfaces, "%s()\n", __FUNCTION__ );
 
      D_ASSERT( core != NULL );
      D_MAGIC_ASSERT( pool, CoreSurfacePool );
-     D_ASSERT( egl != NULL );
-     D_ASSERT( egl->shared != NULL );
 
      return DFB_OK;
 }
