@@ -27,6 +27,8 @@ eglrpi_dep = [dependency('bcm_host'), dependency('egl'), dependency('glesv2'),
 
 add_global_arguments('-DEGL_NO_X11', language: 'c')
 
+pkgconfig = import('pkgconfig')
+
 eglrpi_sources = [
   'egl_layer.c',
   'egl_screen.c',
@@ -39,3 +41,15 @@ library('directfb_eglrpi',
         dependencies: [directfb_dep, eglrpi_dep],
         install: true,
         install_dir: join_paths(moduledir, 'systems'))
+
+pkgconfig.generate(filebase: 'directfb-system-eglrpi',
+                   variables: 'moduledir=' + moduledir,
+                   name: 'DirectFB-system-eglrpi',
+                   description: 'Raspberry Pi system module',
+                   requires_private: ['bcm_host', 'egl', 'glesv2'],
+                   libraries_private: ['-L${moduledir}/systems',
+                                       '-Wl,--whole-archive -ldirectfb_eglrpi -Wl,--no-whole-archive'])
+
+if get_option('default_library') != 'shared'
+  meson.add_install_script('dfb-update-pkgconfig', skip_if_destdir: true)
+endif
