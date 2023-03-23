@@ -1,3 +1,24 @@
+commit b100b4f49b6de66db82ed3bc57aa041e0bbf4dec
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Thu Mar 23 17:16:27 2023 +0100
+
+    Add pkg-config file (for static build)
+
+commit 5315e3c14a58fab55cd1c91f353928105a2e1d16
+Merge: cc328fc 94aaa4a
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Fri Nov 25 15:50:06 2022 +0100
+
+    Merge pull request #4 from caramelli/master
+    
+    EGL/Surfaces: Unused EGLData
+
+commit 94aaa4a4b23d984a4a873bb85cd50154458a1ba1
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Fri Nov 25 15:48:54 2022 +0100
+
+    Update ChangeLog
+
 commit d5b7e5d801004b3aac6a627a5305533a4ebff30b
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Fri Nov 25 15:48:46 2022 +0100
