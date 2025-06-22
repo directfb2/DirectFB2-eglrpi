@@ -19,7 +19,7 @@ project('DirectFB2-eglrpi', 'c',
 
 directfb_dep = dependency('directfb-internal')
 
-moduledir = directfb_dep.get_pkgconfig_variable('moduledir')
+moduledir = directfb_dep.get_variable(pkgconfig: 'moduledir')
 
 eglrpi_dep = [dependency('bcm_host'), dependency('egl'), dependency('glesv2'),
               meson.get_compiler('c').find_library('vchostif',
