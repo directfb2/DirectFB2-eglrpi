@@ -1,3 +1,24 @@
+commit 6a09697b26157e9f124484defb22f24130884562
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Sun Jun 22 21:13:27 2025 +0200
+
+    Set accelerator ID to 0xffffffff
+
+commit e2251a665bdeacc17c6ad190354b695bbd8b6250
+Merge: 5315e3c 71197df
+Author: DirectFB2 <80045286+directfb2@users.noreply.github.com>
+Date:   Thu Mar 23 17:19:51 2023 +0100
+
+    Merge pull request #5 from caramelli/master
+    
+    Add pkg-config file (for static build)
+
+commit 71197dfb8585b6cbceff40a7dc0dec478c850da7
+Author: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date:   Thu Mar 23 17:16:35 2023 +0100
+
+    Update ChangeLog
+
 commit b100b4f49b6de66db82ed3bc57aa041e0bbf4dec
 Author: Nicolas Caramelli <caramelli.devel@gmail.com>
 Date:   Thu Mar 23 17:16:27 2023 +0100
